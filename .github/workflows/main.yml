@@ -34,7 +34,7 @@ jobs:
         username: satokiyo
         password: ${{ secrets.CR_PAT }}
         #ports:
-        #  - 8992:8992
+        #  - 8992:8992 # コンテナ内のポートとDockerホストのポートのマッピング
  
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
