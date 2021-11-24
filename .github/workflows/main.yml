@@ -15,16 +15,21 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
   # This workflow contains a single job called "build"
+jobs:
   docker-test:
     # The type of runner that the job will run on
     #if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest
     # docker image
-    container:
-      image: mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
-
+#    container:
+#      image: mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
+    services:
+      registry:
+        image: mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
+        ports:
+          - 8992:8992
+ 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
