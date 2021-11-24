@@ -26,7 +26,7 @@ jobs:
 #      image: mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
     services:
       registry:
-        image: mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
+        image: satokiyo/mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
         ports:
           - 8992:8992
  
