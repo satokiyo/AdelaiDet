@@ -1,0 +1,78 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    types: [ submitted ]
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+  # This workflow contains a single job called "build"
+jobs:
+  docker-test:
+    # The type of runner that the job will run on
+    #if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+
+    #services:
+    #  redis: 
+    #    image: ghcr.io/n3wt0n/modified-redis
+    #    credentials:
+    #      username: n3wt0n
+    #      password: ${{ secrets.GHCR_TOKEN }}
+    container:
+      image: ghcr.io/satokiyo/mkl-spams_tf2.3_torch1.7.1_cuda10.1_cudnn7_ubuntu16.04:solov2 
+      credentials:
+        username: satokiyo
+        password: ${{ secrets.CR_PAT }}
+        #ports:
+        #  - 8992:8992 # コンテナ内のポートとDockerホストのポートのマッピング
+ 
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Login to GitHub Container Registry
+#        uses: docker/login-action@v1
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.repository_owner }}
+#          password: ${{ secrets.CR_PAT }}
+
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+          
+          
+          
+#      - name: log node version
+#        run: node -v
+#      - name: Step with docker
+#        uses: docker://node:12.14.1-alpine3.10 #このステップだけで起動するコンテナイメージ
+#        with:
+#          entrypoint: '/bin/echo' #コンテナ起動時にechoコマンドを実行
+#          args: 'Hello World' #echoコマンドの引数
+#      - name: Log node version
+#        uses: docker://node:12.14.1-alpine3.10 
+#        with:
+#          entrypoint: '/usr/local/bin/node' #コンテナ起動時にnodeコマンドを実行
+#          args: -v #nodeコマンドの引数(バージョン確認)
