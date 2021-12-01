@@ -1,0 +1,43 @@
+_BASE_: "../Base-RCNN-FPN.yaml"
+MODEL:
+  #WEIGHTS: "swin_tiny_patch4_window7_224_d2.pth"
+  WEIGHTS: "./tmp/SwinT_detectron2/converted_mask_rcnn_swint_T_coco17.pth"
+  PIXEL_MEAN: [123.675, 116.28, 103.53]
+  PIXEL_STD: [58.395, 57.12, 57.375]
+  MASK_ON: True
+  RESNETS:
+    DEPTH: 50
+  BACKBONE:
+    NAME: "build_swint_fpn_backbone"
+  SWINT:
+    OUT_FEATURES: ["stage2", "stage3", "stage4", "stage5"]
+  FPN:
+    IN_FEATURES: ["stage2", "stage3", "stage4", "stage5"]
+  ROI_HEADS:
+    NUM_CLASSES: 1
+  #SEM_SEG_HEAD: 
+  #  NUM_CLASSES: 1
+  #RETINANET:
+  #  NUM_CLASSES: 1
+INPUT:
+  FORMAT: "RGB"
+SOLVER:
+  IMS_PER_BATCH: 5
+  STEPS: (30000,)
+  MAX_ITER: 42000 # 1000 epoch
+  CHECKPOINT_PERIOD: 210 # per 5 epoch
+  WEIGHT_DECAY: 0.05
+  BASE_LR: 0.0001
+  AMP:
+    ENABLED: False
+TEST:
+  EVAL_PERIOD: 42 
+DATASETS:
+  TRAIN: ("my_dataset_train",)
+  TEST: ("my_dataset_val",)
+INPUT:
+  MIN_SIZE_TRAIN: (256, )
+  MAX_SIZE_TRAIN: 256
+  MAX_SIZE_TEST: 256
+  MIN_SIZE_TEST: 256
+  MASK_FORMAT: "bitmask"
