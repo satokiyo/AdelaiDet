@@ -95,6 +95,28 @@ def build_augmentation(cfg, is_train):
     if is_train:
         if cfg.INPUT.HFLIP_TRAIN:
             augmentation.append(T.RandomFlip())
+
+        # add transforms
+        #augmentation.append(T.RandomLighting())
+        augmentation.append(T.RandomRotation([0, 360]))
+        #augmentation.append(T.PadTransform())
+        augmentation.append(T.RandomSaturation(0.8, 1.2))
+        #augmentation.append(T.BlendTransform())
+        #augmentation.append(T.Resize())
+        #augmentation.append(T.ResizeTransform())
+        #augmentation.append(T.ResizeScale())
+        #augmentation.append(T.VFlipTransform())
+        #augmentation.append(T.HFlipTransform())
+        #augmentation.append(T.RandomFlip())
+        augmentation.append(T.RandomBrightness(0.8, 1.2))
+        augmentation.append(T.RandomContrast(0.8, 1.2))
+        #augmentation.append(T.RandomExtent())
+        #augmentation.append(T.RandomCrop())
+        #augmentation.append(T.RandomCrop_CategoryAreaConstraint())
+        #augmentation.append(T.FixedSizeCrop())
+
+        #augmentation.append(T.GridSampleTransform())
+
         logger.info("Augmentations used in training: " + str(augmentation))
     return augmentation
 

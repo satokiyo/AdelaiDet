@@ -4,5 +4,20 @@ MODEL:
   RESNETS:
     DEPTH: 50
 SOLVER:
-  STEPS: (210000, 250000)
-  MAX_ITER: 270000
+  STEPS: (30000,)
+  MAX_ITER: 42000 # 1000 epoch
+  CHECKPOINT_PERIOD: 210 # per 5 epoch
+  BASE_LR: 0.0001
+  AMP:
+    ENABLED: False
+DATASETS:
+  TRAIN: ("my_dataset_train",)
+  TEST: ("my_dataset_val",)
+TEST:
+  EVAL_PERIOD: 42 # ≒650image/16batch_size
+INPUT:
+  MIN_SIZE_TRAIN: (256, )
+  MAX_SIZE_TRAIN: 256
+  MAX_SIZE_TEST: 256
+  MIN_SIZE_TEST: 256
+  MASK_FORMAT: "bitmask"

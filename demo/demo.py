@@ -12,6 +12,8 @@ from detectron2.utils.logger import setup_logger
 
 from predictor import VisualizationDemo
 from adet.config import get_cfg
+from tmp.SwinT_detectron2.swint import add_swint_config
+from pathlib import Path
 
 # constants
 WINDOW_NAME = "COCO detections"
@@ -20,6 +22,7 @@ WINDOW_NAME = "COCO detections"
 def setup_cfg(args):
     # load config from file and command-line arguments
     cfg = get_cfg()
+    add_swint_config(cfg)
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
     # Set score_threshold for builtin models
@@ -76,7 +79,30 @@ if __name__ == "__main__":
 
     if args.input:
         if os.path.isdir(args.input[0]):
-            args.input = [os.path.join(args.input[0], fname) for fname in os.listdir(args.input[0])]
+#            kaggle_2018 = True
+#            if kaggle_2018:
+#                fnames = []
+#                for img_id in tqdm.tqdm(os.listdir(args.input[0])):
+#                    if os.path.isfile(img_id) or "." in img_id:
+#                        continue
+#                    img_path = os.path.join(args.input[0], img_id, "images", img_id + ".png")
+#                    fnames.append(img_path)
+#                    #img = cv2.imread(img_path)
+#                    #if img is None:
+#                    #    continue
+#                args.input = fnames
+#            else:
+#                args.input = [os.path.join(args.input[0], fname) for fname in os.listdir(args.input[0])]
+            HSIL_sample = True
+            if HSIL_sample:
+                fnames = []
+                paths = Path(args.input[0]).glob("*.jpg")
+                for p in tqdm.tqdm(paths):
+                    fnames.append(str(p))
+                args.input = fnames
+            else:
+                args.input = [os.path.join(args.input[0], fname) for fname in os.listdir(args.input[0])]
+
         elif len(args.input) == 1:
             args.input = glob.glob(os.path.expanduser(args.input[0]))
             assert args.input, "The input path(s) was not found"

@@ -17,13 +17,32 @@ from detectron2.utils.visualizer import Visualizer
 from adet.config import get_cfg
 from adet.data.dataset_mapper import DatasetMapperWithBasis
 
+from tmp.SwinT_detectron2.swint import add_swint_config
+from datasets.my_dataset import my_dataset_func
+
 
 def setup(args):
     cfg = get_cfg()
     if args.config_file:
         cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
+    if "SWINT" in cfg.MODEL.keys():
+        add_swint_config(cfg)
     cfg.freeze()
+
+    # Add for visualize image from dataloader
+    data_dir = "/media/HDD2/20211104_panet/sample_data/kaggle_2018/image/stage1_train"
+
+    from detectron2.data import DatasetCatalog
+    DatasetCatalog.register("my_dataset_train", my_dataset_func(data_dir, "train"))
+    DatasetCatalog.register("my_dataset_val", my_dataset_func(data_dir, "val"))
+    MetadataCatalog.get("my_dataset_train").thing_classes = ["nucleus"]
+    MetadataCatalog.get("my_dataset_val").thing_classes = ["nucleus"]
+    MetadataCatalog.get("my_dataset_val").evaluator_type = "coco"
+
+    print(MetadataCatalog.get("my_dataset_train"))
+    print(MetadataCatalog.get("my_dataset_val"))
+
     return cfg
 
 
@@ -81,6 +100,7 @@ if __name__ == "__main__":
                     img = np.asarray(Image.fromarray(img, mode=cfg.INPUT.FORMAT).convert("RGB"))
 
                 visualizer = Visualizer(img, metadata=metadata, scale=scale)
+                output(visualizer.output, str(per_image["image_id"]) + "_ori.jpg")
                 target_fields = per_image["instances"].get_fields()
                 labels = [metadata.thing_classes[i] for i in target_fields["gt_classes"]]
                 vis = visualizer.overlay_instances(
