@@ -17,7 +17,7 @@ from detectron2.utils.visualizer import Visualizer
 from adet.config import get_cfg
 from adet.data.dataset_mapper import DatasetMapperWithBasis
 
-from tmp.SwinT_detectron2.swint import add_swint_config
+from swin_transformer.swint import add_swint_config
 from datasets.my_dataset import my_dataset_func
 
 

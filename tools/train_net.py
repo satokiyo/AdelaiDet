@@ -54,7 +54,7 @@ from adet.checkpoint import AdetCheckpointer
 from adet.evaluation import TextEvaluator
 
 from detectron2.solver.build import maybe_add_gradient_clipping, get_default_optimizer_params
-from tmp.SwinT_detectron2.swint import add_swint_config
+from swin_transformer.swint import add_swint_config
 
 class LossEvalHook(hooks.HookBase):
     def __init__(self, eval_period, model, data_loader):

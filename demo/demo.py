@@ -12,7 +12,7 @@ from detectron2.utils.logger import setup_logger
 
 from predictor import VisualizationDemo
 from adet.config import get_cfg
-from tmp.SwinT_detectron2.swint import add_swint_config
+from swin_transformer.swint import add_swint_config
 from pathlib import Path
 
 # constants

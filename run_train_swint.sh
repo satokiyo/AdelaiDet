@@ -3,7 +3,7 @@
 #    register_coco_instances("my_dataset", {}, "/media/HDD2/20211104_panet/sample_data/ROI/cytology_sample_x20_512x512/train/sample_data/HSILsample01/annotations/HSILsample01.json", "/media/HDD2/20211104_panet/sample_data/ROI/cytology_sample_x20_512x512/train/sample_data/HSILsample01")
 
 python3 tools/train_net.py \
-    --config-file tmp/SwinT_detectron2/configs/SwinT/mask_rcnn_swint_T_FPN_3x_mydataset.yaml \
+    --config-file swin_transformer/configs/SwinT/mask_rcnn_swint_T_FPN_3x_mydataset.yaml \
     --num-gpus 1 \
     OUTPUT_DIR ./out/mask_rcnn_swint_T_FPN_3x_pseudoLabel
 

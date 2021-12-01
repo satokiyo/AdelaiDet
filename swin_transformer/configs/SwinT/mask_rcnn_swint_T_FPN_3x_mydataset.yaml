@@ -1,7 +1,7 @@
 _BASE_: "../Base-RCNN-FPN.yaml"
 MODEL:
   #WEIGHTS: "swin_tiny_patch4_window7_224_d2.pth"
-  WEIGHTS: "./tmp/SwinT_detectron2/converted_mask_rcnn_swint_T_coco17.pth"
+  WEIGHTS: "./swin_transformer/converted_mask_rcnn_swint_T_coco17.pth"
   PIXEL_MEAN: [123.675, 116.28, 103.53]
   PIXEL_STD: [58.395, 57.12, 57.375]
   MASK_ON: True
